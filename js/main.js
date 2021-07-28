@@ -10,9 +10,31 @@ var arreyJ = [];
 var arreyk = [];
 var isIncluded = false;
 var score = 0;
+var mina = 16;
+var max;
+var mode = prompt("seleziona D per difficile, M per medio e F facile", "F");
+while (!mode || mode.trim() === "") {
+  mode = prompt("seleziona D per difficile, M per medio e F facile", "F");
+}
 
-while (arreyJ.length < 16) {
-  var mine = randomNumber(100, 1);
+switch (mode.toLowerCase()) {
+  case "D":
+    max = 50;
+    break;
+  case "M":
+    max = 80;
+    break;
+  case "F":
+    max = 100;
+    break;
+  default:
+    max = 80;
+    break;
+}
+console.log(max);
+
+while (arreyJ.length < mina) {
+  var mine = randomNumber(max, 1);
   if (!arreyJ.includes(mine)) {
     arreyJ.push(mine);
   }
@@ -20,8 +42,12 @@ while (arreyJ.length < 16) {
 console.log(arreyJ);
 console.log(arreyk);
 
-while (arreyk.length < 84 && isIncluded === false) {
-  var choiceNumber = parseInt(prompt("Inserisci un numero tra 1 e 100"));
+while (arreyk.length < max - mina && isIncluded === false) {
+  var choiceNumber = parseInt(prompt("Inserisci un numero"));
+  while (!choiceNumber || isNaN(choiceNumber)) {
+    choiceNumber = parseInt(prompt("Inserisci un numero"));
+  }
+  var totalScore = max - mina;
   if (!arreyk.includes(choiceNumber)) {
     arreyk.push(choiceNumber);
     console.log(arreyk);
