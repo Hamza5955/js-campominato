@@ -12,25 +12,27 @@ var isIncluded = false;
 var score = 0;
 var mina = 16;
 var max;
-var mode = prompt("seleziona D per difficile, M per medio e F facile", "F");
+var mode = prompt("Inserisci la difficoltà !", "difficile");
+
 while (!mode || mode.trim() === "") {
-  mode = prompt("seleziona D per difficile, M per medio e F facile", "F");
+  mode = prompt("Inserisci la difficoltà !", "difficile");
 }
 
 switch (mode.toLowerCase()) {
-  case "D":
+  case "difficile":
     max = 50;
     break;
-  case "M":
+  case "mediao":
     max = 80;
     break;
-  case "F":
+  case "facile":
     max = 100;
     break;
   default:
     max = 80;
     break;
 }
+
 console.log(max);
 
 while (arreyJ.length < mina) {
@@ -56,7 +58,7 @@ while (arreyk.length < max - mina && isIncluded === false) {
   }
   if (arreyJ.includes(choiceNumber)) {
     isIncluded = true;
-    alert("Hai perso!" + "Il tuo punteggio è " + score);
+    alert("Hai perso! Il tuo punteggio è " + score + " su " + totalScore);
   } else {
     score++;
   }
