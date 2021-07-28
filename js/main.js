@@ -12,17 +12,20 @@ var isIncluded = false;
 var score = 0;
 var mina = 16;
 var max;
-var mode = prompt("Inserisci la difficoltà !", "difficile");
+var mode = prompt(
+  "Inserisci la difficoltà tra difficile ,media e  facile",
+  "difficile"
+);
 
 while (!mode || mode.trim() === "") {
-  mode = prompt("Inserisci la difficoltà !", "difficile");
+  mode = prompt("Inserisci la difficoltà", "difficile");
 }
 
 switch (mode.toLowerCase()) {
   case "difficile":
     max = 50;
     break;
-  case "mediao":
+  case "media":
     max = 80;
     break;
   case "facile":
@@ -45,9 +48,9 @@ console.log(arreyJ);
 console.log(arreyk);
 
 while (arreyk.length < max - mina && isIncluded === false) {
-  var choiceNumber = parseInt(prompt("Inserisci un numero"));
+  var choiceNumber = parseInt(prompt("Inserisci un numero tra 1 e " + max));
   while (!choiceNumber || isNaN(choiceNumber)) {
-    choiceNumber = parseInt(prompt("Inserisci un numero"));
+    choiceNumber = parseInt(prompt("Inserisci un numero tra 1 e " + max));
   }
   var totalScore = max - mina;
   if (!arreyk.includes(choiceNumber)) {
