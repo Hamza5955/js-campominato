@@ -6,16 +6,14 @@ Se il numero è presente nella lista dei numeri generati, la partita termina, al
 La partita termina quando il giocatore inserisce un numero “vietato” o raggiunge il numero massimo possibile di numeri consentiti.
 Al termine della partita il software deve comunicare il punteggio, cioè il numero di volte che l’utente ha inserito un numero consentito.
 */
+/*
 var arreyJ = [];
 var arreyk = [];
 var isIncluded = false;
 var score = 0;
 var mina = 16;
 var max;
-var mode = prompt(
-  "Inserisci la difficoltà tra difficile ,media e  facile",
-  "difficile"
-);
+var mode = prompt("Inserisci la difficoltà tra difficile ,media", "difficile");
 
 while (!mode || mode.trim() === "") {
   mode = prompt("Inserisci la difficoltà", "difficile");
@@ -79,4 +77,116 @@ function isinArray(element, array) {
 }
 function randomNumber(max, min) {
   return Math.floor(Math.random() * (max - min + 1)) + 1;
+}
+*/
+/*
+minavar arreyJ = [];
+var arreyk = [];
+var isIncluded = false;
+var score = 0;
+var  = 16;
+var max;*/
+
+var startBtn = document.getElementById("start");
+var arreyJ = [];
+var arreyk = [];
+var userNumber;
+var bombNumber = 16;
+var totalNumber = 0;
+var attempts;
+var foundNumber = false;
+var score = 0;
+
+startBtn.addEventListener("click", function () {
+  var difficulty = document.getElementById("difficolta").value;
+
+  switch (difficulty) {
+    case "normal":
+      totalNumber = 80;
+      attempts = totalNumber - bombNumber;
+      break;
+
+    case "hard":
+      totalNumber = 50;
+      attempts = totalNumber - bombNumber;
+      break;
+
+    default:
+      totalNumber = 100;
+      attempts = totalNumber - bombNumber;
+  }
+  document.getElementById("field").innerHTML = "";
+  console.log(arreyk);
+  arreyk = [];
+  createGrid(totalNumber);
+
+  while (arreyJ.length < bombNumber) {
+    var randomNumber = randomNumberGenerator(1, totalNumber);
+    var findNumber = findInArray(arreyJ, randomNumber);
+    if (findNumber == false) {
+      arreyJ.push(randomNumber);
+    }
+  }
+
+  console.log("Numeri Bomba: " + arreyJ);
+  document.getElementById("field").addEventListener("click", function (e) {
+    console.log(e.target.dataset.cell);
+    let element = document.querySelectorAll(
+      "[data-cell='" + e.target.dataset.cell + "']"
+    );
+
+    if (arreyJ.includes(parseInt(e.target.dataset.cell))) {
+      element[0].classList.add("red");
+      alert("Boom! mi dispiace");
+      alert("Punteggio totale: " + score);
+      location.reload();
+    } else if (arreyk.indexOf(e.target.dataset.cell) == -1) {
+      element[0].classList.add("green");
+      arreyk.push(e.target.dataset.cell);
+      score++;
+    }
+  });
+});
+
+function randomNumberGenerator(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function findInArray(array, element) {
+  var i = 0;
+  var result = false;
+  while (i < array.length && result == false) {
+    if (array[i] == element) {
+      result = true;
+    }
+    i++;
+  }
+  return result;
+}
+
+function wrongNumber() {
+  while (correctNumberCheck(1, totalNumber, userNumber) == false) {
+    userNumber = parseInt(prompt("inserisci un numero"));
+    console.log(userNumber);
+  }
+}
+
+function correctNumberCheck(min, max, number) {
+  var result = false;
+  if (number >= min && number <= max) {
+    result = true;
+  }
+  return result;
+}
+
+function createGrid(cells) {
+  for (let i = 1; i <= cells; i++) {
+    let cell = `
+        <div data-cell="${i}" class="cell">${i}</div>
+        `;
+    let cellTemplate = document.createElement("DIV");
+    cellTemplate.classList.add("square");
+    cellTemplate.innerHTML = cell;
+    document.getElementById("field").appendChild(cellTemplate);
+  }
 }
